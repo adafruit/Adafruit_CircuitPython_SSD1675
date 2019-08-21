@@ -57,6 +57,7 @@ Usage Example
 =============
 
 .. code-block:: python
+
     """Simple test script for 2.13" 250x122 black and white featherwing.
 
     Supported products:
