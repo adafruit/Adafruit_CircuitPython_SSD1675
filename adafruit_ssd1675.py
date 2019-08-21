@@ -33,8 +33,8 @@ Implementation Notes
 
 **Hardware:**
 
-.. todo:: Add links to any specific hardware product page(s), or category page(s). Use unordered list & hyperlink rST
-   inline format: "* `Link Text <url>`_"
+* `Adafruit 2.13" Monochrome ePaper Display Breakout <https://www.adafruit.com/product/4197>`_
+* `Adafruit 2.13" Black and White FeatherWing <https://www.adafruit.com/product/4195>`_
 
 **Software and Dependencies:**
 
