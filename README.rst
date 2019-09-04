@@ -31,9 +31,6 @@ Installing from PyPI
 .. note:: This library is not available on PyPI yet. Install documentation is included
    as a standard element. Stay tuned for PyPI availability!
 
-.. todo:: Remove the above note if PyPI version is/will be available at time of release.
-   If the library is not planned for PyPI, remove the entire 'Installing from PyPI' section.
-
 On supported GNU/Linux systems like the Raspberry Pi, you can install the driver locally `from
 PyPI <https://pypi.org/project/adafruit-circuitpython-ssd1675/>`_. To install for current user:
 
@@ -59,7 +56,46 @@ To install in a virtual environment in your current project:
 Usage Example
 =============
 
-.. todo:: Add a quick, simple example. It and other examples should live in the examples folder and be included in docs/examples.rst.
+.. code-block:: python
+
+    """Simple test script for 2.13" 250x122 black and white featherwing.
+
+    Supported products:
+      * Adafruit 2.13" Black and White FeatherWing
+        * https://www.adafruit.com/product/4195
+      """
+
+    import time
+    import board
+    import busio
+    import displayio
+    import adafruit_ssd1675
+
+    displayio.release_displays()
+
+    epd_cs = board.D9
+    epd_dc = board.D10
+
+    display_bus = displayio.FourWire(board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000)
+    time.sleep(1)
+
+    display = adafruit_ssd1675.SSD1675(display_bus, width=250, height=122, rotation=90)
+
+    g = displayio.Group()
+
+    f = open("/display-ruler.bmp", "rb")
+
+    pic = displayio.OnDiskBitmap(f)
+    t = displayio.TileGrid(pic, pixel_shader=displayio.ColorConverter())
+    g.append(t)
+
+    display.show(g)
+
+    display.refresh()
+
+    print("refreshed")
+
+    time.sleep(120)
 
 Contributing
 ============

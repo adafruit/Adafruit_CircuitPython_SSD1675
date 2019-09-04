@@ -33,8 +33,8 @@ Implementation Notes
 
 **Hardware:**
 
-.. todo:: Add links to any specific hardware product page(s), or category page(s). Use unordered list & hyperlink rST
-   inline format: "* `Link Text <url>`_"
+* `Adafruit 2.13" Monochrome ePaper Display Breakout <https://www.adafruit.com/product/4197>`_
+* `Adafruit 2.13" Black and White FeatherWing <https://www.adafruit.com/product/4195>`_
 
 **Software and Dependencies:**
 
@@ -49,7 +49,7 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_SSD1675.git"
 
 _START_SEQUENCE = (
-    b"\x12\x00" # Software reset
+    b"\x12\x80\x02" # Software reset, 2ms delay
     b"\x74\x01\x54" # set analog block control
     b"\x7e\x01\x3b" # set digital block control
     b"\x01\x03\xfa\x01\x00" # driver output control
@@ -60,7 +60,10 @@ _START_SEQUENCE = (
     b"\x04\x03\x41\xa8\x32" # Set source voltage
     b"\x3a\x01\x30" # Set dummy line period
     b"\x3b\x01\x0a" # Set gate line width
-    b"\x32\x46\x80\x60\x40\x00\x00\x00\x00\x10\x60\x20\x00\x00\x00\x00\x80\x60\x40\x00\x00\x00\x00\x10\x60\x20\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x03\x00\x00\x02\x09\x09\x00\x00\x02\x03\x03\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" # LUT
+    b"\x32\x46\x80\x60\x40\x00\x00\x00\x00\x10\x60\x20\x00\x00\x00\x00\x80\x60\x40\x00\x00\x00\x00"
+    b"\x10\x60\x20\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x03\x00\x00\x02\x09\x09\x00\x00"
+    b"\x02\x03\x03\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+    b"\x00\x00\x00" # LUT
 )
 
 _STOP_SEQUENCE = (
@@ -71,10 +74,14 @@ _STOP_SEQUENCE = (
 class SSD1675(displayio.EPaperDisplay):
     """SSD1675 driver"""
     def __init__(self, bus, **kwargs):
-        color_command = None
-        super().__init__(bus, _START_SEQUENCE, _STOP_SEQUENCE, **kwargs,
+        stop_sequence = _STOP_SEQUENCE
+        try:
+            bus.reset()
+        except RuntimeError:
+            stop_sequence = b""
+        super().__init__(bus, _START_SEQUENCE, stop_sequence, **kwargs,
                          ram_width=160, ram_height=296,
                          set_column_window_command=0x44, set_row_window_command=0x45,
                          set_current_column_command=0x4e, set_current_row_command=0x4f,
-                         write_black_ram_command=0x24, write_color_ram_command=color_command,
-                         refresh_display_command=0x20)
+                         write_black_ram_command=0x24,
+                         refresh_display_command=0x20, refresh_time=2.2)
