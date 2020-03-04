@@ -15,7 +15,9 @@ displayio.release_displays()
 epd_cs = board.D9
 epd_dc = board.D10
 
-display_bus = displayio.FourWire(board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000)
+display_bus = displayio.FourWire(
+    board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000
+)
 time.sleep(1)
 
 display = adafruit_ssd1675.SSD1675(display_bus, width=250, height=122, rotation=90)
