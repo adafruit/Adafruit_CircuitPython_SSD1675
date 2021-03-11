@@ -23,7 +23,7 @@ display_bus = displayio.FourWire(
 )
 time.sleep(1)
 
-display = adafruit_ssd1675.SSD1675(display_bus, width=250, height=122, rotation=90)
+display = adafruit_ssd1675.SSD1675(display_bus, width=250, height=122, rotation=270)
 
 g = displayio.Group()
 
