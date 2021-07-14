@@ -89,7 +89,8 @@ Usage Example
         pic, pixel_shader=getattr(pic, "pixel_shader", displayio.ColorConverter())
     )
     # CircuitPython 7 compatible only
-    # t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)    g.append(t)
+    # t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)
+    g.append(t)
 
     display.show(g)
 
