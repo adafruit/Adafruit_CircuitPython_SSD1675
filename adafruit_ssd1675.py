@@ -55,7 +55,7 @@ _STOP_SEQUENCE = b"\x10\x01\x01"  # Enter deep sleep
 class SSD1675(displayio.EPaperDisplay):
     """SSD1675 driver"""
 
-    def __init__(self, bus, **kwargs):
+    def __init__(self, bus: displayio.FourWire, **kwargs) -> None:
         stop_sequence = _STOP_SEQUENCE
         try:
             bus.reset()
