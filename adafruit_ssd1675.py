@@ -75,4 +75,5 @@ class SSD1675(displayio.EPaperDisplay):
             write_black_ram_command=0x24,
             refresh_display_command=0x20,
             refresh_time=2.2,
+            address_little_endian=True
         )
