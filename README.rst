@@ -71,6 +71,12 @@ Usage Example
     import board
     import busio
     import displayio
+    # Starting in CircuitPython 9.x, fourwire will be a seperate internal library
+    # rather than a component of the displayio library
+    try:
+        from fourwire import FourWire
+    except ImportError:
+        from displayio import FourWire
     import adafruit_ssd1675
 
     displayio.release_displays()
@@ -78,7 +84,7 @@ Usage Example
     epd_cs = board.D9
     epd_dc = board.D10
 
-    display_bus = displayio.FourWire(board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000)
+    display_bus = FourWire(board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000)
     time.sleep(1)
 
     display = adafruit_ssd1675.SSD1675(display_bus, width=250, height=122, rotation=90)
@@ -96,7 +102,7 @@ Usage Example
     # t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)
     g.append(t)
 
-    display.show(g)
+    display.root_group = g
 
     display.refresh()
 

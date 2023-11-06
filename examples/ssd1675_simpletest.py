@@ -13,12 +13,19 @@ import board
 import displayio
 import adafruit_ssd1675
 
+# Starting in CircuitPython 9.x fourwire will be a seperate internal library
+# rather than a component of the displayio library
+try:
+    from fourwire import FourWire
+except ImportError:
+    from displayio import FourWire
+
 displayio.release_displays()
 
 epd_cs = board.D9
 epd_dc = board.D10
 
-display_bus = displayio.FourWire(
+display_bus = FourWire(
     board.SPI(), command=epd_dc, chip_select=epd_cs, baudrate=1000000
 )
 time.sleep(1)
@@ -37,7 +44,7 @@ with open("/display-ruler.bmp", "rb") as f:
     # t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)
     g.append(t)
 
-    display.show(g)
+    display.root_group = g
 
     display.refresh()
 

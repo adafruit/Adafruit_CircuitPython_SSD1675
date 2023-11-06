@@ -26,7 +26,15 @@ Implementation Notes
 
 """
 
-import displayio
+# Starting in CircuitPython 9.x fourwire & EPaperDisplay will be seperate internal
+# libraries rather than components of the displayio library
+try:
+    from fourwire import FourWire
+    from epaperdisplay import EPaperDisplay
+except ImportError:
+    from displayio import FourWire
+    from displayio import EPaperDisplay
+
 
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_SSD1675.git"
@@ -53,10 +61,10 @@ _STOP_SEQUENCE = b"\x10\x01\x01"  # Enter deep sleep
 
 
 # pylint: disable=too-few-public-methods
-class SSD1675(displayio.EPaperDisplay):
+class SSD1675(EPaperDisplay):
     """SSD1675 driver"""
 
-    def __init__(self, bus: displayio.FourWire, **kwargs) -> None:
+    def __init__(self, bus: FourWire, **kwargs) -> None:
         stop_sequence = _STOP_SEQUENCE
         try:
             bus.reset()

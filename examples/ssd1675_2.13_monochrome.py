@@ -13,6 +13,14 @@ import board
 import displayio
 import adafruit_ssd1675
 
+# Starting in CircuitPython 9.x fourwire will be a seperate internal library
+# rather than a component of the displayio library
+try:
+    from fourwire import FourWire
+except ImportError:
+    from displayio import FourWire
+
+
 displayio.release_displays()
 
 # This pinout works on a Feather M4 and may need to be altered for other boards.
@@ -22,7 +30,7 @@ epd_dc = board.D10
 epd_reset = board.D5
 epd_busy = board.D6
 
-display_bus = displayio.FourWire(
+display_bus = FourWire(
     spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000
 )
 time.sleep(1)
@@ -43,7 +51,7 @@ with open("/display-ruler.bmp", "rb") as f:
     # t = displayio.TileGrid(pic, pixel_shader=pic.pixel_shader)
     g.append(t)
 
-    display.show(g)
+    display.root_group = g
 
     display.refresh()
 
