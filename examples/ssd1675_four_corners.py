@@ -15,6 +15,12 @@ import busio
 import displayio
 import terminalio
 import adafruit_ssd1675
+# Starting in CircuitPython 9.x fourwire will be a seperate internal library
+# rather than a component of the displayio library
+try:
+    from fourwire import FourWire
+except ImportError:
+    from displayio import FourWire
 
 displayio.release_displays()
 
@@ -27,7 +33,7 @@ epd_dc = board.EPD_DC
 epd_reset = board.EPD_RESET
 epd_busy = board.EPD_BUSY
 
-display_bus = displayio.FourWire(
+display_bus = FourWire(
     spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000
 )
 display = adafruit_ssd1675.SSD1675(
@@ -41,7 +47,7 @@ display = adafruit_ssd1675.SSD1675(
 
 # Make the display context
 main_group = displayio.Group()
-display.show(main_group)
+display.root_group = main_group
 
 palette = displayio.Palette(2)
 palette[0] = 0x000000
