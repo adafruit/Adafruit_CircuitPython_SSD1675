@@ -12,6 +12,7 @@ import time
 import board
 import displayio
 import adafruit_ssd1675
+
 # Starting in CircuitPython 9.x fourwire will be a seperate internal library
 # rather than a component of the displayio library
 try:
