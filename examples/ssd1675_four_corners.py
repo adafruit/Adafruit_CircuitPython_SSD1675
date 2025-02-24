@@ -10,14 +10,14 @@
 # pylint: disable=no-member
 
 import time
+
 import board
 import busio
 import displayio
 import terminalio
-import adafruit_ssd1675
-
 from fourwire import FourWire
 
+import adafruit_ssd1675
 
 displayio.release_displays()
 
@@ -30,9 +30,7 @@ epd_dc = board.EPD_DC
 epd_reset = board.EPD_RESET
 epd_busy = board.EPD_BUSY
 
-display_bus = FourWire(
-    spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000
-)
+display_bus = FourWire(spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000)
 display = adafruit_ssd1675.SSD1675(
     display_bus,
     width=250,

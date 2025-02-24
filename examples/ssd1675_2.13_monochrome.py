@@ -6,15 +6,15 @@
 Supported products:
   * Adafruit 2.13" Monochrome ePaper Display Breakout
     * https://www.adafruit.com/product/4197
-  """
+"""
 
 import time
+
 import board
 import displayio
-import adafruit_ssd1675
-
 from fourwire import FourWire
 
+import adafruit_ssd1675
 
 displayio.release_displays()
 
@@ -25,9 +25,7 @@ epd_dc = board.D10
 epd_reset = board.D5
 epd_busy = board.D6
 
-display_bus = FourWire(
-    spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000
-)
+display_bus = FourWire(spi, command=epd_dc, chip_select=epd_cs, reset=epd_reset, baudrate=1000000)
 time.sleep(1)
 
 display = adafruit_ssd1675.SSD1675(
