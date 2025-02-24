@@ -26,14 +26,14 @@ Implementation Notes
 
 """
 
-# Starting in CircuitPython 9.x fourwire & EPaperDisplay will be seperate internal
-# libraries rather than components of the displayio library
+from epaperdisplay import EPaperDisplay
+
 try:
+    import typing
+
     from fourwire import FourWire
-    from epaperdisplay import EPaperDisplay
 except ImportError:
-    from displayio import FourWire
-    from displayio import EPaperDisplay
+    pass
 
 
 __version__ = "0.0.0+auto.0"
@@ -84,5 +84,5 @@ class SSD1675(EPaperDisplay):
             write_black_ram_command=0x24,
             refresh_display_command=0x20,
             refresh_time=2.2,
-            address_little_endian=True
+            address_little_endian=True,
         )
