@@ -13,9 +13,9 @@ Introduction
     :target: https://github.com/adafruit/Adafruit_CircuitPython_SSD1675/actions
     :alt: Build Status
 
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
-    :alt: Code Style: Black
+.. image:: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+    :target: https://github.com/astral-sh/ruff
+    :alt: Code Style: Ruff
 
 CircuitPython `displayio` drivers for SSD1675-based ePaper displays
 
@@ -71,12 +71,7 @@ Usage Example
     import board
     import busio
     import displayio
-    # Starting in CircuitPython 9.x, fourwire will be a seperate internal library
-    # rather than a component of the displayio library
-    try:
-        from fourwire import FourWire
-    except ImportError:
-        from displayio import FourWire
+    from fourwire import FourWire
     import adafruit_ssd1675
 
     displayio.release_displays()
